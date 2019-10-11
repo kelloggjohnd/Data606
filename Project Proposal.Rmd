@@ -1,0 +1,93 @@
+---
+title: DATA 606 Data Project Proposal
+author: 
+---
+
+### Data Preparation
+
+```{r setup, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+library(dplyr)
+library(tidyr)
+
+
+# load data
+# dowload file from github, save it locally in your home directory
+download <- download.file('https://raw.githubusercontent.com/kelloggjohnd/Data606/master/Aggregates.csv', destfile = "Aggregates.csv", method = "wininet") 
+download <- download.file('https://raw.githubusercontent.com/kelloggjohnd/Data606/master/Country.csv', destfile = "Country.csv", method = "wininet") 
+
+# manipulate the data into a data frame
+agg_raw <- data.frame(read.csv(file = "Aggregates.csv", header = TRUE, sep = ","))
+cty_raw <- data.frame(read.csv(file = "Country.csv", header = TRUE, sep = ","))
+
+names(agg_raw)<- c("Country.Name","Country.Code","Series.Name","Series.Code","YR2009","YR2010","YR2011","YR2012","YR2013","YR2014","YR2015","YR2016","YR2017","YR2018")
+names(cty_raw)<- c("Country.Name","Country.Code","Series.Name","Series.Code","YR2009","YR2010","YR2011","YR2012","YR2013","YR2014","YR2015","YR2016","YR2017","YR2018")
+agg_raw <- agg_raw[,c('Country.Name','YR2009','YR2010','YR2011','YR2012','YR2013','YR2014','YR2015','YR2016','YR2017','YR2018')]
+cty_raw <- cty_raw[,c('Country.Name','YR2009','YR2010','YR2011','YR2012','YR2013','YR2014','YR2015','YR2016','YR2017','YR2018')]
+
+cty_raw<- cty_raw%>%
+  filter(YR2009 != ".." & YR2012 != ".." & YR2011 != ".." & YR2013 != ".." & YR2015 != ".." & YR2017 != "..")
+
+agg_raw<- agg_raw%>%
+  filter(YR2009 != ".." & YR2012 != ".." & YR2011 != ".." & YR2013 != ".." & YR2015 != ".." & YR2017 != "..")
+
+cty_raw <- cty_raw %>% mutate_all(na_if,"..")
+agg_raw <- agg_raw %>% mutate_all(na_if,"..")
+
+country <- cty_raw[1:323,]
+Agg_data <- agg_raw [1:83,]
+
+```
+
+
+### Research question 
+
+**You should phrase your research question in a way that matches up with the scope of inference your dataset allows for.**
+Over the last 10 years has a country's Computer, communications and other technical services (import and export) been affected by Geographical area and/or prosperity 
+
+### Cases 
+
+**What are the cases, and how many are there?**
+There are two observation classifications
+1. The individual Country - there are 217 countries defined in the World Bank data set
+2. Aggrate pre-defined groups - there are 47 groups based on Geographical area, political situation, and monetary status
+
+
+### Data collection 
+
+Data is generated from The World Bank databank World Development Indicators. 
+
+World Development Indicators (WDI) is the primary World Bank collection of development indicators, compiled from officially recognized international sources. It presents the most current and accurate global development data available, and includes national, regional and global estimates. [Note: Even though Global Development Finance (GDF) is no longer listed in the WDI database name, all external debt and financial flows data continue to be included in WDI. The GDF publication has been renamed International Debt Statistics (IDS), and has its own separate database, as well.
+
+
+
+### Type of study 
+
+This is an observational study
+
+
+
+### Data Source 
+
+Data can be found at: (https://databank.worldbank.org/source/world-development-indicators).  I have applied a focus on Indicator Names: Computer, communications and other services (% of commercial service exports) and Computer, communications and other services (% of commercial service imports).  Countries with Blank values for all 10 years will be removed from the dataset.
+
+### Dependent Variable
+
+Import and export of Technical services have been affected over the last 10 years
+
+
+
+### Independent Variable
+
+**You should have two independent variables, one quantitative and one qualitative.**
+
+The independent varibles include the Geographical position (Qualitative) and a country's financial status (Quantitative).  
+
+
+### Relevant summary statistics 
+
+**Provide summary statistics for each the variables. Also include appropriate visualizations related to your research question (e.g. scatter plot, boxplots, etc). This step requires the use of R, hence a code chunk is provided below. Insert more code chunks as needed.**
+
+```{r}
+
+```
+
